@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:welcome_screen/weclome_screen.dart';
+import 'package:welcome_screen/WelcomeScreen/weclome_screen.dart';
 
 const kPrimaryColor = Color(0xFF039EA2);
 const kContinueWithEmailOrPhoneButtonColor = Color(0xFFCDFDFE);
+const kPlayNextSessionButtonColor = Color(0xFF039EA2);
 
 void main() {
   runApp(const MyApp());
