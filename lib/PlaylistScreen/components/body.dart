@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:welcome_screen/MeditateScreen/meditate_screen.dart';
 import 'package:welcome_screen/PlaylistScreen/components/track_card.dart';
 import 'package:welcome_screen/main.dart';
 
@@ -69,7 +70,16 @@ class Body extends StatelessWidget {
                           borderRadius: BorderRadius.circular(24.0)),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return MeditateScreen();
+                        },
+                      ),
+                    );
+                  },
                   child: Text('▷ Play Next Session',
                       style: TextStyle(color: Colors.white, fontSize: 17)),
                 ),

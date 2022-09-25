@@ -4,6 +4,7 @@ import 'package:welcome_screen/WelcomeScreen/weclome_screen.dart';
 const kPrimaryColor = Color(0xFF039EA2);
 const kContinueWithEmailOrPhoneButtonColor = Color(0xFFCDFDFE);
 const kPlayNextSessionButtonColor = Color(0xFF039EA2);
+const kAppBarBottomLineColor = Color(0xFFEBEBEB);
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Welcome Screen',
       theme: ThemeData(
-        primaryColor: Colors.white,
+        primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: kPrimaryColor,
       ),
       home: WelcomeScreen(),
