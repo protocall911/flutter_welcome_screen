@@ -21,7 +21,17 @@ class AuthRepositoryImpl implements AuthRepositories {
   @override
   Future<Either<String, bool>> signUp(String login, String password) {
     try {
-      _db.insert(table, Employee());
+      _db.insert(
+          table,
+          Employee(
+                  id: 2,
+                  role: 1,
+                  surname: 'Гордеев',
+                  name: 'Матвей',
+                  middlename: 'Игоревич',
+                  login: 'm.i.gordeev',
+                  password: 'Pass456!')
+              .toMap());
     } on DatabaseException catch (error) {}
   }
 }
