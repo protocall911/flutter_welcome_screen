@@ -32,6 +32,10 @@ class DataBaseHelper {
     _pathDB = join(_appDocumentDirectory.path, 'clothingstore.db');
 
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      dataBase = await openDatabase(_pathDB, version: _version, onOpen: (dataBase) {
+      }, onCreate: (db, version) async {
+        await onCreateTable(db);
+      });
     } else {
       dataBase = await openDatabase(_pathDB,
           onUpgrade: (db, oldVersion, newVersion) async {
@@ -135,6 +139,7 @@ class DataBaseHelper {
   Future<void> onDropDataBase() async {
     dataBase.close();
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      databaseFactory.deleteDatabase(_pathDB);
     } else {
       deleteDatabase(_pathDB);
     }
