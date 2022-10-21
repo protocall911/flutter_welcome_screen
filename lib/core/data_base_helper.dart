@@ -1,8 +1,8 @@
 import 'dart:io';
-
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:path/path.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:welcome_screen/common/data_base_request.dart';
 import 'package:welcome_screen/data/model/client.dart';
 import 'package:welcome_screen/data/model/delivery.dart';
@@ -32,10 +32,13 @@ class DataBaseHelper {
     _pathDB = join(_appDocumentDirectory.path, 'clothingstore.db');
 
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-      dataBase = await openDatabase(_pathDB, version: _version, onOpen: (dataBase) {
-      }, onCreate: (db, version) async {
-        await onCreateTable(db);
-      });
+      sqfliteFfiInit();
+      dataBase = await databaseFactoryFfi.openDatabase(_pathDB,
+          options: OpenDatabaseOptions(
+            version: _version,
+            onCreate: (db, version) => onCreateTable(db),
+            onUpgrade: (db, oldVersion, newVersion) => onUpdateTable(db),
+          ));
     } else {
       dataBase = await openDatabase(_pathDB,
           onUpgrade: (db, oldVersion, newVersion) async {
@@ -139,9 +142,9 @@ class DataBaseHelper {
   Future<void> onDropDataBase() async {
     dataBase.close();
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-      databaseFactory.deleteDatabase(_pathDB);
-    } else {
       deleteDatabase(_pathDB);
+    } else {
+      await databaseFactoryFfi.deleteDatabase(_pathDB);
     }
   }
 }

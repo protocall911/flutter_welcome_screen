@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:welcome_screen/domain/entity/delivery_entity.dart';
 
 class Delivery extends DeliveryEntity {
