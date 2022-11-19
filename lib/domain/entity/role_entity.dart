@@ -1,20 +1,15 @@
 class RoleEntity {
-  late int id;
-  final String name;
-
-  RoleEntity({
-    required this.id,
-    required this.name,
-  });
+  late final int id;
+  final String role;
+  RoleEntity({this.id = 0, required this.role});
 }
 
-// enum RoleEnum {
-//   admin(ID_role: 1, name:'Администратор'),
-//   courier(ID_role: 2, name:'Курьер');
-// const RoleEnum({
-// required this.name,
-// required this.ID_role,
-// });
-//
-// final String name;
-// final String ID_role;}
+enum RoleEnum {
+  admin(1, 'Администратор'),
+  user(2, 'Пользователь');
+
+  const RoleEnum(this.id, this.name,);
+  final String name;
+  final int id;
+}
+

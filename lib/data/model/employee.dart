@@ -1,34 +1,21 @@
 import 'package:welcome_screen/domain/entity/employee_entity.dart';
+import 'package:welcome_screen/domain/entity/role_entity.dart';
 
 class Employee extends EmployeeEntity {
-  late int id;
-  final int role;
-  final String surname;
-  final String name;
-  final String middlename;
-  final String login;
-  final String password;
 
   Employee({
-    required this.id,
-    required this.role,
-    required this.surname,
-    required this.name,
-    required this.middlename,
-    required this.login,
-    required this.password,
-  }) : super(
-      id: id,
-      role: role,
-      surname: surname,
-      name: name,
-      middlename: middlename,
-      login: login,
-      password: password);
+    super.id = 0,
+    required super.idRole,
+    required super.surname,
+    required super.name,
+    required super.middlename,
+    required super.login,
+    required super.password,
+  });
 
   Map<String, dynamic> toMap() {
     return {
-      'role_ID': role,
+      'role_ID': idRole.id,
       'surname': surname,
       'name': name,
       'middlename': middlename,
@@ -39,12 +26,13 @@ class Employee extends EmployeeEntity {
 
   factory Employee.toFromMap(Map<String, dynamic> json) {
     return Employee(
-        id: json['ID_employee'],
-        role: json['role_ID'],
+        id: json['ID_employee'] as int,
         surname: json['surname'],
         name: json['name'],
         middlename: json['middlename'],
         login: json['login'],
-        password: json['password']);
+        password: json['password'],
+        idRole: RoleEnum.values
+            .firstWhere((element) => element.id == (json['ID_role'] as int)));
   }
 }

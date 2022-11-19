@@ -43,7 +43,7 @@ abstract class DataBaseRequest {
       'CREATE TABLE "$tableEmployee" ("ID_employee"	INTEGER NOT NULL,"role_ID"	INTEGER NOT NULL,"surname"	TEXT NOT NULL,"name"	TEXT NOT NULL,"middlename"	TEXT,"login"	TEXT NOT NULL UNIQUE,"password"	TEXT NOT NULL,PRIMARY KEY("ID_employee" AUTOINCREMENT),FOREIGN KEY("role_ID") REFERENCES "role"("ID_role"))';
 
   static const String _createTableRole =
-      'CREATE TABLE "$tableRole" ("ID_role"	INTEGER NOT NULL,"name"	TEXT NOT NULL UNIQUE,PRIMARY KEY("ID_role" AUTOINCREMENT))';
+      'CREATE TABLE "$tableRole" ("ID_role"	INTEGER NOT NULL,"role"	TEXT NOT NULL UNIQUE,PRIMARY KEY("ID_role" AUTOINCREMENT))';
 
   static const String _createTableOrder =
       'CREATE TABLE "$tableOrder" ("ID_order"	INTEGER NOT NULL,"client_ID"	INTEGER NOT NULL,"placement_date"	TEXT NOT NULL,"postcode"	TEXT NOT NULL,"city"	TEXT NOT NULL,"address"	TEXT NOT NULL,"track_code"	TEXT NOT NULL,PRIMARY KEY("ID_order" AUTOINCREMENT),FOREIGN KEY("client_ID") REFERENCES "client"("ID_client"))';

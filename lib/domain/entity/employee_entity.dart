@@ -1,6 +1,8 @@
+import 'package:welcome_screen/domain/entity/role_entity.dart';
+
 class EmployeeEntity {
-  late int id;
-  final int role;
+  late final int id;
+  final RoleEnum idRole;
   final String surname;
   final String name;
   final String middlename;
@@ -8,8 +10,8 @@ class EmployeeEntity {
   final String password;
 
   EmployeeEntity({
-    required this.id,
-    required this.role,
+    this.id = 0,
+    required this.idRole,
     required this.surname,
     required this.name,
     required this.middlename,

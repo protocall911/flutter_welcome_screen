@@ -1,17 +1,12 @@
 import 'package:welcome_screen/domain/entity/role_entity.dart';
 
 class Role extends RoleEntity {
-  late int id;
-  final String name;
+  Role({super.id, required super.role});
 
-  Role({required this.id, required this.name})
-      : super(id: id, name: name);
+  Map<String, dynamic> toMap() => {
+    "ID_role": id,
+    "role": role
+  };
 
-  Map<String, dynamic> toMap() {
-    return {'name': name};
-  }
-
-  factory Role.toFromMap(Map<String, dynamic> json) {
-    return Role(id: json['ID_role'], name: json['name']);
-  }
+  factory Role.fromMap(Map<String, dynamic> json) => Role(id: json["ID_role"], role: json["role"]);
 }

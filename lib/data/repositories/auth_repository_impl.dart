@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:welcome_screen/common/data_base_request.dart';
-import 'package:welcome_screen/core/data_base_helper.dart';
+import 'package:welcome_screen/core/db/data_base_helper.dart';
 import 'package:welcome_screen/data/model/employee.dart';
+import 'package:welcome_screen/data/model/role.dart';
 import 'package:welcome_screen/domain/entity/role_entity.dart';
 import 'package:welcome_screen/repositories/auth_repositories.dart';
 
@@ -13,25 +14,36 @@ class AuthRepositoryImpl implements AuthRepositories {
   String get table => DataBaseRequest.tableEmployee;
 
   @override
-  Future<Either<String, RoleEntity>> signIn(String login, String password) {
-    // TODO: implement signIn
-    throw UnimplementedError();
+  Future<Either<String, RoleEnum>> signIn(
+      String login, String password) async {
+    try {
+      var employee =
+          (await _db.query(DataBaseRequest.tableEmployee,
+              where: 'login = ?', whereArgs: [login]
+          ));
+
+      if (employee.isEmpty) return const Left('Такого пользователя нет!');
+
+      var user = Employee.toFromMap(employee.single);
+
+      if (user.password != password) return const Left('Неправильный пароль!');
+
+      return Right(user.idRole);
+    } on DatabaseException catch (error) {
+      return Left(error.toString());
+    }
   }
 
   @override
-  Future<Either<String, bool>> signUp(String login, String password) {
+  Future<String?> signUp(RoleEnum role, String surname, String name,
+      String middlename, String login, String password) async {
     try {
-      _db.insert(
-          table,
-          Employee(
-                  id: 2,
-                  role: 1,
-                  surname: 'Гордеев',
-                  name: 'Матвей',
-                  middlename: 'Игоревич',
-                  login: 'm.i.gordeev',
-                  password: 'Pass456!')
-              .toMap());
-    } on DatabaseException catch (error) {}
+      Employee user = Employee(idRole: role, surname: surname, name: name, middlename: middlename, login: login, password: password);
+      await _db.insert(DataBaseRequest.tableEmployee, user.toMap());
+      return null;
+    } on DatabaseException catch (error) {
+      if(error.isUniqueConstraintError("employee.login")) return "Пользователь с данным логином уже существует!";
+      return error.toString();
+    }
   }
 }
